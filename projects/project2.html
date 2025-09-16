@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+        }
+
+        button {
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #234E70;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+        }
+
+        .container {
+            max-width: 30rem;
+            width: 90%;
+            background-color: #FBF88E;
+            padding: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #234E70;
+            margin-bottom: 1.5rem;
+        }
+
+        .todo_input_btn_box {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+
+        #todo_input::placeholder {
+            font-size: 1.1rem;
+            color: #234E70;   
+        }
+
+        #todo_input {
+            width: 70%;
+            padding: 1rem;
+            outline: none;
+            border: 2px solid #234E70;
+            font-size: 1.2rem;
+            color: #234E70;
+        }
+
+        .todo_add_btn {
+            width: 30%;
+            background-color: #234E70;
+            color: #FBF88E;
+            font-size: 1.5rem;
+        }
+
+        .todo_list_lis {
+            background-color: #234E70;
+            color: #FBF88E;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            font-size: 1.2rem;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        li div:last-child {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .done, .remove {
+            background: transparent;
+            color: #FBF88E;
+            font-size: 1rem;
+            border: 2px solid #FBF88E;
+            padding: 0.2rem 0.4rem;
+        }
+
+        .done:hover, .remove:hover {
+            background-color: #FBF88E;
+            color: #234E70;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To do List</h1>
+        <div class="todo_input_btn_box">
+            <input type="text" id="todo_input" placeholder="Add new task">
+            <button class="todo_add_btn">+</button>
+        </div>
+        <ul class="todo_list">
+            <li class="todo_list_lis">
+                <div>Task 01</div>
+                <div>
+                    <button class="done">Done</button>
+                    <button class="remove">Remove</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+<script>
+    const todoInput = document.querySelector("#todo_input")
+    const todoAddBtn = document.querySelector(".todo_add_btn")
+    const body = document.body;
+
+
+    todoAddBtn.addEventListener("click", ()=>{
+        const inputValue = todoInput.value
+        const todoListUl = document.querySelector(".todo_list")
+        const li = document.createElement("li")
+        const liInnerHtml = `<li class="todo_list_lis">
+            <div>${inputValue}</div>
+            <div>
+                <button class="done">Done</button>
+                <button class="remove">Remove</button>
+            </div>
+        </li>`
+        li.innerHTML = liInnerHtml
+        if(inputValue === ""){
+            alert("Please Add Your task")
+        }else{
+            todoListUl.append(li)
+        }
+})
+
+body.addEventListener("click", (eventObject)=>{
+    if(eventObject.target.classList.contains("done")){
+        const todoTask = eventObject.target.parentElement.previousElementSibling;
+        todoTask.style.textDecoration = "line-through"
+        todoTask.style.color = "hsla(57, 88%, 86%, 0.600)"
+    }
+    if(eventObject.target.classList.contains("remove")){
+        const removeTodoTask = eventObject.target.parentElement.parentElement
+        removeTodoTask.remove()
+    }
+})
+</script>
+</body>
+</html>
